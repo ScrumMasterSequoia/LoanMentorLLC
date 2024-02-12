@@ -8,8 +8,6 @@ const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
 const resultsElement = document.getElementById('results')// testing
 const matchesElement = document.getElementById('matches')// testing
-//resultsContainerElement.classList.add('hide')
-
 let currentQuestionIndex;
 
 startButton.addEventListener('click', startQuestionnaire)
@@ -51,9 +49,6 @@ function showQuestion(question) {
     const button = document.createElement('button') // Create a button element
     button.innerText = answer.text // Set the button text to the answer text
     button.classList.add('btn') // Add the 'btn' class to the button
-    if (answer.correct) { // If the answer is correct
-      button.dataset.correct = answer.correct // Set the 'correct' attribute of the button
-    }
     button.addEventListener('click', selectAnswer) // Add a click event listener to the button
     answerButtonsElement.appendChild(button) // Append the button to the answer buttons container
   })
@@ -61,8 +56,8 @@ function showQuestion(question) {
 
 function resetQuestionnaire() {
   resetState()
-  startButton.innerText = 'Start'
-  startButton.classList.remove('hide')
+  startButton.innerText = 'Restart'
+  startButton.classList.add('hide')
   resultsContainerElement.classList.add('hide')
   questionContainerElement.classList.add('hide')
   matchesElement.innerHTML = "";
@@ -74,50 +69,47 @@ function resetState() { // clear the previous question
   while (answerButtonsElement.firstChild) {
     answerButtonsElement.removeChild(answerButtonsElement.firstChild)
   }
-  
-
 }
 
 function selectAnswer(e) {
   const selectedButton = e.target
-  // const correct = selectedButton.dataset.correct
-  // setStatusClass(document.body, correct)
-  // Array.from(answerButtonsElement.children).forEach(button => {
-  //   setStatusClass(button, button.dataset.correct)
-  // })
-  console.log(selectedButton)
+
+  console.log(selectedButton.innerHTML);
+  // console.log("Selected Button = " + selectedButton.text);
+  // console.log("CLD Match = " + selectedButton.cldMatch);
+  // console.log("OnDeck Match = " + selectedButton.onDeckMatch);
+  // console.log("NBC Match = " + selectedButton.nbcMatch);
+  // console.log("UpStart Match = " + selectedButton.upStartMatch);
+
+  // if (!selectedButton.cldMatch) {
+  //   disqualifyCLD();
+  // }
+  // if (!selectedButton.onDeckMatch) {
+  //   disqualifyOnDeck();
+  // }
+  // if (!selectedButton.nbcMatch) {
+  //   disqualifyNBC();
+  // }
+  // if (!selectedButton.upStartMatch) {
+  //   disqualifyUpStart();
+  // }
+
   if (currentQuestionIndex + 1 < questions.length) { // if you are not at the last index
     nextButton.classList.remove('hide') // show the next button
     submitButton.classList.add('hide')  // hide the submit button
-  } 
-  else { // if you are at the last index
-    startButton.innerText = 'Restart' // change the start button to say restart
+  } else { // if you are at the last index
     startButton.classList.remove('hide') // show start
     nextButton.classList.add('hide') // hide next button
     submitButton.classList.remove('hide') // show submit
   }
   
   if(currentQuestionIndex > 0) { // if you are not at the first index
+    startButton.innerText = 'Restart' // change the start button to say restart
     prevButton.classList.remove('hide') // show the previous button
   } 
   
 }
 
-// // edit below to show the results of the questionnaire
-// function setStatusClass(element, correct) {
-//   clearStatusClass(element)
-//   if (correct) {
-//     element.classList.add('correct')
-//   } else {
-//     element.classList.add('wrong')
-//   }
-// }
-
-// // obsolete
-// function clearStatusClass(element) {
-//   element.classList.remove('correct')
-//   element.classList.remove('wrong')
-// }
 
 // 1) Set up an array of booleans that will hold the results of the questionnaire
 let results = [
@@ -183,66 +175,65 @@ const questions = [
   // {
   //   question: 'What type of loan are you looking for?',
   //   answers: [
-  //     { text: 'Small Business Loan', correct: true, disqualifyCLD },
-  //     { text: 'Line of Credit', correct: true },
-  //     { text: 'Mortgage Financing', correct: true },
-  //     { text: 'Personal Loan', correct: true },
-  //     { text: 'Student Loan', correct: true },
-  //     { text: 'Auto Loan', correct: true },
-  //     { text: 'Other', correct: true}
+  //     { text: 'Small Business Loan', , disqualifyCLD },
+  //     { text: 'Line of Credit',  },
+  //     { text: 'Mortgage Financing',  },
+  //     { text: 'Personal Loan',  },
+  //     { text: 'Student Loan',  },
+  //     { text: 'Auto Loan',  },
+  //     { text: 'Other', }
   //   ]
   // },
   // {
   //   question: 'What is the estimated amount of funding you are looking for?',
   //   answers: [
-  //     { text: 'Less than $10,000', correct: true },
-  //     { text: 'Between $10,000 and $50,000', correct: true },
-  //     { text: 'Between $50,000 and $100,000', correct: true },
-  //     { text: 'Between $100,000 and $500,000', correct: true },
-  //     { text: 'Between $500,000 and $1,000,000', correct: true },
-  //     { text: 'Between $1,000,000 and $5,000,000', correct: true },
-  //     { text: 'Above $5 million', correct: true },
+  //     { text: 'Less than $10,000',  },
+  //     { text: 'Between $10,000 and $50,000',  },
+  //     { text: 'Between $50,000 and $100,000',  },
+  //     { text: 'Between $100,000 and $500,000',  },
+  //     { text: 'Between $500,000 and $1,000,000',  },
+  //     { text: 'Between $1,000,000 and $5,000,000',  },
+  //     { text: 'Above $5 million',  },
 
   //   ]
   // },
   // {
   //   question: 'What is your estimated Business Credit Score (paydex score ranges from 1-100. Dont worry, some options may not require good credit)',
   //   answers: [
-  //     { text: '80 or higher', correct: true },
-  //     { text: 'Between 50 and 79', correct: true },
-  //     { text: 'Below 50', correct: true }
+  //     { text: '80 or higher',  },
+  //     { text: 'Between 50 and 79',  },
+  //     { text: 'Below 50',  }
   //   ]
   // },
   // {
   //   question: 'Are you able to demonstrate adequate cash flow in your business (if applicable)?',
   //   answers: [
-  //     { text: 'Yes', correct: true },
-  //     { text: 'No', correct: true },
-  //     { text: 'Not Applicable', correct: true }
+  //     { text: 'Yes',  },
+  //     { text: 'No',  },
+  //     { text: 'Not Applicable',  }
   //   ]
   // },
   // {
   //   question: 'Do you have access to financial documents such as: bank statements, tax returns, and/or financial statements?',
   //   answers: [
-  //     { text: 'Yes', correct: true },
-  //     { text: 'No', correct: true },
-  //     { text: 'Not Applicable', correct: true }
+  //     { text: 'Yes',  },
+  //     { text: 'No',  },
+  //     { text: 'Not Applicable',  }
   //   ]
   // },
   {
     question: 'Is your business insured?',
     answers: [
-      { text: 'Yes', correct: true },
-      { text: 'No', correct: true },
-      { text: 'Not Applicable (I am seeking a non-business loan)', correct: true }
+      { text: 'Yes', cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false },
+      { text: 'No',  cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false }
     ]
   },
   {
     question: 'Have you been pre-approved for a loan?',
     answers: [
-      { text: 'Yes', correct: true },
-      { text: 'No', correct: true },
-      { text: 'Not Applicable', correct: true }
+      { text: 'Yes', cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false  },
+      { text: 'No', cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false  },
+      { text: 'Not Applicable', cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false  }
     ]
   }
 ]
