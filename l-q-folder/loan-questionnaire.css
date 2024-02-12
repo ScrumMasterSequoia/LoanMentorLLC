@@ -103,8 +103,16 @@
     font-size: inherit;
     cursor: pointer;
     padding: 0.25rem;
-}
+  }
   .results-table {
     display : grid;
     gap: 10px;
   }
+
+  #results-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  
