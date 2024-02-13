@@ -2,17 +2,63 @@ const submitButton = document.getElementById('submit-btn')
 const restartButton = document.getElementById('restart-btn')
 const questionContainerElement = document.getElementById('question-container')
 const resultsContainerElement = document.getElementById('result-container')
-
 const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
-const resultsElement = document.getElementById('results')// testing
-const matchesElement = document.getElementById('matches')// testing
-
+const resultsElement = document.getElementById('results')
+const matchesElement = document.getElementById('matches')
 const q1a1btn = document.getElementById('q1a1')
 const q1a2btn = document.getElementById('q1a2')
 
 submitButton.addEventListener('click', submit)
 restartButton.addEventListener('click', restart)
+
+q1a1btn.addEventListener('click', handleq1a1)
+q1a2btn.addEventListener('click', handleq1a2)
+
+// Dropdown Menu
+
+ document.addEventListener("click", e => {
+    const isDropdownButton = e.target.matches("[data-dropdown-button]")
+    if (!isDropdownButton && e.target.closest("[data-dropdown]") != null) return
+    let currentDropdown
+    if (isDropdownButton) {
+      currentDropdown = e.target.closest("[data-dropdown]")
+      currentDropdown.classList.toggle("active")
+    }
+    document.querySelectorAll("[data-dropdown].active").forEach(dropdown => {
+      if (dropdown === currentDropdown ) return
+      dropdown.classList.remove("active")
+    })
+  })
+
+// Dark Mode
+
+let themeDots = document.getElementsByClassName("theme-dot")
+let theme = localStorage.getItem('theme')
+
+if(theme == null) {
+  setTheme('light')
+}else{
+  setTheme(theme)
+}
+
+for(var i=0; themeDots.length > i; i++) {
+  themeDots[i].addEventListener('click', function(){
+    let mode = this.dataset.mode
+    console.log('Option Clicked: ', mode)
+    setTheme(mode)
+  })
+}
+
+function setTheme(mode){
+  if(mode == 'light'){
+    document.getElementById('theme-style').href = 'loan-questionnaire.css'
+  }
+  if(mode == 'dark'){
+    document.getElementById('theme-style').href = '../darkmode.css'
+  }
+  localStorage.setItem('theme', mode)
+}
 
 let results = [
   {"name" : "CommercialLoanDirect", "match" : true},
@@ -21,20 +67,22 @@ let results = [
   {"name" : "UpStart", "match" : true}
 ] 
 
-// for some reason the event listeners are not working. They are getting called on page load only
-q1a1btn.addEventListener('click', handleq1a1)
-q1a2btn.addEventListener('click', handleq1a2)
+// Might want a switch statement for the different buttons to handle the qualify/disqualify
 
 // Question 1
-function handleq1a1() {
-  disqualifyCLD();
+function handleq1a1() { // handles the first button of first question
   qualifyNBC();
+  qualifyCLD();
+  qualifyOnDeck();
+  qualifyUpStart();
   setBtnColor(q1a1btn);
   clearBtnColor(q1a2btn);
 }
-function handleq1a2() {
+function handleq1a2() { // handles the second button of first question
   disqualifyNBC();
-  qualifyCLD();
+  disqualifyCLD();
+  disqualifyOnDeck();
+  disqualifyUpStart();
   setBtnColor(q1a2btn);
   clearBtnColor(q1a1btn);
 }
@@ -46,56 +94,35 @@ function clearBtnColor(btn) {
   btn.style.backgroundColor = "rgb(0, 152, 183)";
 }
 
-
-  
 // change links herein for the affiliate links
 
 function createAnchor(name) {
   if (name === "CommercialLoanDirect") {
-  return `<a href="https://www.commercialloandirect.com/">Commercial Loan Direct</a><br>`
-  }
+    return `<a href="https://www.commercialloandirect.com/">Commercial Loan Direct</a><br>`}
   else if (name === "OnDeck") {
-  return `<a href="https://www.ondeck.com/">OnDeck</a><br>`
-  }
+    return `<a href="https://www.ondeck.com/">OnDeck</a><br>`}
   else if (name === "NationalBusinessCapital") {
-  return `<a href="https://www.nationalbusinesscapital.com/">National Business Capital</a><br>`
-  }
+    return `<a href="https://www.nationalbusinesscapital.com/">National Business Capital</a><br>`}
   else if (name === "UpStart") {
-  return `<a href="https://www.upstart.com/">UpStart</a><br>`
-  }
+    return `<a href="https://www.upstart.com/">UpStart</a><br>`}
 }
 
-function disqualifyCLD() {
-  results[0].match = false;
-}
-function qualifyCLD() {
-  results[0].match = true;
-}
+function disqualifyCLD() { results[0].match = false; }
+function qualifyCLD() { results[0].match = true; }
 
-function disqualifyOnDeck() {
-  results[1].match = false;
-}
-function qualifyOnDeck() {
-  results[1].match = true;
-}
+function disqualifyOnDeck() { results[1].match = false; }
+function qualifyOnDeck() { results[1].match = true; }
 
-function disqualifyNBC() {
-  results[2].match = false;
-}
-function qualifyNBC() {
-  results[2].match = true;
-}
+function disqualifyNBC() { results[2].match = false;}
+function qualifyNBC() { results[2].match = true;}
 
-function disqualifyUpStart() {
-  results[3].match = false;
-}
-function qualifyUpStart() {
-  results[0].match = true;
-}
+function disqualifyUpStart() { results[3].match = false;}
+function qualifyUpStart() { results[3].match = true; }
 
 function restart() {
   matchesElement.innerHTML = ""
   restartButton.classList.add('hide')
+  submitButton.classList.remove('hide')
   questionContainerElement.classList.remove('hide')
   resultsContainerElement.classList.add('hide')
   clearBtnColor(q1a1btn);
@@ -109,6 +136,7 @@ function restart() {
 function submit() {
   matchesElement.innerHTML = ""
   restartButton.classList.remove('hide')
+  submitButton.classList.add('hide')
   questionContainerElement.classList.add('hide')
   resultsContainerElement.classList.remove('hide')
   let numberOfMatches = 0;
@@ -123,130 +151,3 @@ function submit() {
   }
   matchesElement.innerHTML += "<br><br>";
 }
-
-// clearBtnColor(q1a1btn);
-// clearBtnColor(q1a2btn);
-
-// qualifyCLD();
-// qualifyOnDeck();
-// qualifyNBC();
-// qualifyUpStart();
-
-
-
-// const questions = [
-  // {
-  //   question: 'What type of loan are you looking for?',
-  //   answers: [
-  //     { text: 'Small Business Loan', , disqualifyCLD },
-  //     { text: 'Line of Credit',  },
-  //     { text: 'Mortgage Financing',  },
-  //     { text: 'Personal Loan',  },
-  //     { text: 'Student Loan',  },
-  //     { text: 'Auto Loan',  },
-  //     { text: 'Other', }
-  //   ]
-  // },
-  // {
-  //   question: 'What is the estimated amount of funding you are looking for?',
-  //   answers: [
-  //     { text: 'Less than $10,000',  },
-  //     { text: 'Between $10,000 and $50,000',  },
-  //     { text: 'Between $50,000 and $100,000',  },
-  //     { text: 'Between $100,000 and $500,000',  },
-  //     { text: 'Between $500,000 and $1,000,000',  },
-  //     { text: 'Between $1,000,000 and $5,000,000',  },
-  //     { text: 'Above $5 million',  },
-
-  //   ]
-  // },
-  // {
-  //   question: 'What is your estimated Business Credit Score (paydex score ranges from 1-100. Dont worry, some options may not require good credit)',
-  //   answers: [
-  //     { text: '80 or higher',  },
-  //     { text: 'Between 50 and 79',  },
-  //     { text: 'Below 50',  }
-  //   ]
-  // },
-  // {
-  //   question: 'Are you able to demonstrate adequate cash flow in your business (if applicable)?',
-  //   answers: [
-  //     { text: 'Yes',  },
-  //     { text: 'No',  },
-  //     { text: 'Not Applicable',  }
-  //   ]
-  // },
-  // {
-  //   question: 'Do you have access to financial documents such as: bank statements, tax returns, and/or financial statements?',
-  //   answers: [
-  //     { text: 'Yes',  },
-  //     { text: 'No',  },
-  //     { text: 'Not Applicable',  }
-  //   ]
-  // },
-  // {
-  //   question: 'Is your business insured?',
-  //   answers: [
-  //     { text: 'Yes', cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false },
-  //     { text: 'No',  cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false }
-  //   ]
-  // },
-  // {
-  //   question: 'Have you been pre-approved for a loan?',
-  //   answers: [
-  //     { text: 'Yes', cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false  },
-  //     { text: 'No', cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false  },
-  //     { text: 'Not Applicable', cldMatch: true, onDeckMatch: false, nbcMatch: false, upStartMatch: false  }
-  //   ]
-  // }
-// ]
-
-let themeDots = document.getElementsByClassName("theme-dot")
-
-let theme = localStorage.getItem('theme')
-
-if(theme == null) {
-    setTheme('light')
-}else{
-    setTheme(theme)
-}
-
-for(var i=0; themeDots.length > i; i++) {
-    themeDots[i].addEventListener('click', function(){
-        let mode = this.dataset.mode
-        console.log('Option Clicked: ', mode)
-        setTheme(mode)
-    })
-}
-
-function setTheme(mode){
-    if(mode == 'light'){
-        document.getElementById('theme-style').href = 'loan-questionnaire.css'
-    }
-    if(mode == 'dark'){
-        document.getElementById('theme-style').href = '../darkmode.css'
-    }
-
-    localStorage.setItem('theme', mode)
-}
-
- document.addEventListener("click", e => {
-    const isDropdownButton = e.target.matches("[data-dropdown-button]")
-    if (!isDropdownButton && e.target.closest("[data-dropdown]") != null) return
-  
-    let currentDropdown
-    if (isDropdownButton) {
-      currentDropdown = e.target.closest("[data-dropdown]")
-      currentDropdown.classList.toggle("active")
-    }
-  
-    document.querySelectorAll("[data-dropdown].active").forEach(dropdown => {
-      if (dropdown === currentDropdown ) return
-      dropdown.classList.remove("active")
-    })
-  })
-
-  topFunction = () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  }

@@ -11,3 +11,8 @@ The project has several features which include:
 - previous button
 - restart button, which puts you back to the beginning and erases your response data
 - submit button which needs added functionnality 
+
+
+
+# Affiliate program resources
+ https://onemorecupof-coffee.com/best-business-loan-affiliate-programs/
