@@ -1,21 +1,83 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head >
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="content-language" content="en-us">
-  <link href="loan-questionnaire.css" rel="stylesheet">
-  <script defer src="loan-questionnaire.js"></script>
-  <title lang="en-us">Quiz App</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="#Home-tag">Loan Mentor LLC</title>
+    <link rel="icon" type="image/svg+xml" href="https://sequoia-portfolio.s3.amazonaws.com/favicon.ico" />
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Roboto:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+   
+    <link rel="stylesheet" type="text/css" href="loan-questionnaire.css">
+    
+    <link id="theme-style" rel="stylesheet" type="text/css" href="">
+
+    <script defer src="loan-questionnaire.js"></script>
+    <title lang="en-us">Quiz App</title>
+  
 </head>
-<body>
-  <div class="header">
-    <a href="../index.html"> <button  style="background: black; cursor: pointer; padding-top: 5px; border-radius: 2px;"><img src="../images/home.png" alt="home"></button> </a>
-  </div>
+<body >
+    <!-- Affiliate program resources -->
+    <!-- https://onemorecupof-coffee.com/best-business-loan-affiliate-programs/ -->
+    <div class="header">
+    <div class="dropdown" data-dropdown>
+        <button class="link" data-dropdown-button>Menu</button>
+        
+        <div class="dropdown-menu information-grid">
+            <div>
+                <div class="dropdown-heading">Companies</div>
+                <div class="dropdown-links">
+                    <a href="../index.html#CLD-tag" class="link">Commercial Loan Direct</a>
+                    <a href="../index.html#OnDeck-tag" class="link">OnDeck</a>
+                    <a href="../index.html#NBC-tag" class="link">National Business Capital</a>
+                    <a href="../index.html#UpStart-tag" class="link">UpStart</a>
+                </div>
+            </div>
+        
+            <div>
+                <div class="dropdown-heading">Pages</div>
+                <div class="dropdown-links">
+                    <a href="../index.html" class="link">Back to Top</a>
+                    <a href="#" class="link" alt="404">About</a>
+                    <a href="#" class="link" alt="404">Contact</a>
+                    <!-- change the contact to a separate page and link to it here. can have both. 
+                        Target=blank?-->
+                </div>
+            </div>
+
+            <div>
+                <div class="dropdown-heading">About the Author</div>
+                <div class="dropdown-links">
+                    <a target="_blank" href="https://portfolio-website-sequoia.netlify.app/" class="link">Portfolio Website</a>
+                    <a target="_blank" href="https://github.com/ScrumMasterSequoia" class="link">GitHub</a>
+                    <a target="_blank" href="https://www.instagram.com/sequoiakanies/" class="link">Instagram</a>
+                    <a target="_blank" href="https://www.linkedin.com/in/sequoia-kanies-a402a228a/" class="link">LinkedIn</a>
+                    <a target="_blank" href="https://www.youtube.com/@sequoiakanies2202/featured" class="link">YouTube</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+        <div id="theme-options-wrapper">
+            <a href="../index.html" class="link" style="background: none"> <button  style="cursor: pointer; background: black; padding: 4px; padding-bottom: 0px; margin-top: -15px; border-radius: 2px;"><img src="../images/home.png" alt="home"></button> </a>
+            
+            <div data-mode="light" id="light-mode" class="theme-dot" ></div>
+            <div data-mode="dark" id="dark" class="theme-dot"></div>
+        </div>
+    </div>
+
+  
   <div class="container">
 
-    <div id="question-container" class="hide">
-      <div id="question">Question</div>
+    <div id="question-container">
+      <div id="question">Question 1: Are you preaproved for a loan?</div>
+      <button id="q1a1" class="btn">Yes</button>
+      <button id="q1a2" class="btn">No</button>
       <div id="answer-buttons" class="btn-grid">
         
       </div>
@@ -29,10 +91,8 @@
     </div> 
 
     <div class="controls">
-      <button id="start-btn" class="start-btn btn">Start Questionnaire</button>
-      <button id="prev-btn" class="prev-btn btn hide">Back</button> <!-- added but not implemented yet -->
-      <button id="next-btn" class="next-btn btn hide">Next</button>
-      <button id="submit-btn" class="submit-btn btn hide">Submit</button> <!-- added but not implemented yet -->
+      <button id="restart-btn" class="submit-btn hide">Restart</button>
+      <button id="submit-btn" class="submit-btn">Submit</button> 
     </div>
   </div>
 </body>
