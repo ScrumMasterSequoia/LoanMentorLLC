@@ -69,6 +69,8 @@ let results = [
 
 // Might want a switch statement for the different buttons to handle the qualify/disqualify
 
+// Might want to use select fields for mutual exclusivity of the buttons, and then submit the qualify/disqualify to the results array. That way I don't have to requalify all the time, breaking the logic of the buttons.
+
 // Question 1
 function handleq1a1() { // handles the first button of first question
   qualifyNBC();
@@ -133,7 +135,12 @@ function restart() {
   qualifyUpStart();
 }
 
+// add a loading animation with a spinning logo on submit
+
 function submit() {
+function tellSamHowCoolHeIs() {
+  console.log("Sam, you are so cool!");
+}
   matchesElement.innerHTML = ""
   restartButton.classList.remove('hide')
   submitButton.classList.add('hide')
